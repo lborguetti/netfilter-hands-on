@@ -3,32 +3,32 @@ Course Netfilter/Iptables
 
 # Environment
 
-* Import VM images
+## Import VM images
 
-* Network setup
+## Network setup
 
 # Linux Networking Concepts
 
-* What is a `computer network'?
+## What is a `computer network'?
 
-* What is the `Internet'?
+## What is the `Internet'?
 
-* How Does The Internet Work?
+## How Does The Internet Work?
 
 https://www.youtube.com/watch?v=7_LPdttKXPc
 
 https://www.youtube.com/watch?v=HNQD0qJ0TC4
 
-* This IP Thing
+## This IP Thing
 
-The role of the IP layer is to figure out how to `route' packets to their final destination
+- The role of the IP layer is to figure out how to `route' packets to their final destination
 
-Router is a node with interfaces on more than one network
+- Router is a node with interfaces on more than one network
 
-The Linux Kernel's IP layer keeps a table of different `routes', describing how to get to various groups of IP addresses
+- The Linux Kernel's IP layer keeps a table of different `routes', describing how to get to various groups of IP addresses
 
 
-* Groups of IP Addresses: Network Masks
+## Groups of IP Addresses: Network Masks
 
         Short   Full                    Maximum         Comment
           Form    Form                    #Machines
@@ -51,13 +51,13 @@ The Linux Kernel's IP layer keeps a table of different `routes', describing how 
         /30     /255.255.255.252        3
 
 
-* Machine Names and IP Addresses (DNS)
+## Machine Names and IP Addresses (DNS)
 
-* Different Services: Email, Web, FTP, Name Serving
+## Different Services: Email, Web, FTP, Name Serving
 
 - TCP and UDP have a concept of `ports'.
 
-* What Packets Look Like
+## What Packets Look Like
 
 - IP : https://en.wikipedia.org/wiki/IPv4#Protocol
 
@@ -66,23 +66,23 @@ The Linux Kernel's IP layer keeps a table of different `routes', describing how 
 
 ## Netfilter/Iptables
 
-* So What's A Packet Filter?
+### So What's A Packet Filter?
 
 A packet filter is a piece of software which looks at the header of packets as they pass through, and decides the fate of the entire packet
 
 It might decide to DROP the packet, ACCEPT the packet, or something more complicated (NAT)
 
-* Why Would I Want to Packet Filter?
+### Why Would I Want to Packet Filter?
 
 Control. Security. Watchfulness
 
-* How Do I Packet Filter Under Linux?
+### How Do I Packet Filter Under Linux?
 
-Netfilter
+- Netfilter
 
-Iptables
+- Iptables
 
-* How Packets Traverse The Filters
+### How Packets Traverse The Filters
 
 ![Routing tables traversal process](http://ebtables.netfilter.org/br_fw_ia/bridge3b.png)
 
