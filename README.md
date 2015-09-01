@@ -25,7 +25,7 @@ https://www.youtube.com/watch?v=HNQD0qJ0TC4
 
 - Router is a node with interfaces on more than one network
 
-- The Linux Kernel's IP layer keeps a table of different `routes', describing how to get to various groups of IP addresses
+- The Linux Kernel's IP layer keeps a table of different `routes`, describing how to get to various groups of IP addresses
 
 
 ## Groups of IP Addresses: Network Masks
@@ -55,7 +55,7 @@ https://www.youtube.com/watch?v=HNQD0qJ0TC4
 
 ## Different Services: Email, Web, FTP, Name Serving
 
-- TCP and UDP have a concept of `ports'.
+- TCP and UDP have a concept of `ports`.
 
 ## What Packets Look Like
 
@@ -68,13 +68,13 @@ https://www.youtube.com/watch?v=HNQD0qJ0TC4
 
 ### So What's A Packet Filter?
 
-A packet filter is a piece of software which looks at the header of packets as they pass through, and decides the fate of the entire packet
+- A packet filter is a piece of software which looks at the header of packets as they pass through, and decides the fate of the entire packet
 
-It might decide to DROP the packet, ACCEPT the packet, or something more complicated (NAT)
+- It might decide to DROP the packet, ACCEPT the packet, or something more complicated (NAT)
 
 ### Why Would I Want to Packet Filter?
 
-Control. Security. Watchfulness
+- Control. Security. Watchfulness
 
 ### How Do I Packet Filter Under Linux?
 
