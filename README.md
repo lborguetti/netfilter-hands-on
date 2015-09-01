@@ -9,9 +9,9 @@ Course Netfilter/Iptables
 
 # Linux Networking Concepts
 
-## What is a `computer network'?
+## What is a `computer network`?
 
-## What is the `Internet'?
+## What is the `Internet`?
 
 ## How Does The Internet Work?
 
