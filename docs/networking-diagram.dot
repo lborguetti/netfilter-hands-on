@@ -1,0 +1,57 @@
+digraph G {
+
+    rankdir=LR;
+    graph [nodesep=1.5, ranksep=1.5];
+
+    subgraph cluster0 {
+
+        color="black"
+        style=solid;
+
+        subgraph cluster1 {
+            node [style=filled shape=signature color=black fillcolor="gray" height=1];
+            style=solid;
+            color="black";
+            sw1 [label="Switch 1" shape=signature height=1]
+            sw2 [label="Switch 2" shape=signature height=1]
+
+        }
+
+        subgraph cluster2 {
+            node [style=filled shape=Mdiamond color=black fillcolor="gray" height=1.2];
+            label = "router:network\ncidr:192.168.10.0/24\ncidr:192.168.20.0/24\ncidr:10.0.2.0/24";
+            style=filled;
+            color="black";
+            fillcolor="#9E8582"
+            router [label="Router"];
+
+        }
+        subgraph cluster3 {
+            node [style=filled shape=box3d color=black fillcolor="gray" height=1.5];
+            label = "server:network\ncidr:192.168.20.0/24";
+            style=filled;
+            color="black"
+            fillcolor="#41BBD9"
+            server [label="Server"];
+        }
+        subgraph cluster4 {
+            node [style=filled shape=box3d color=black fillcolor="gray" height=1.5];
+            label = "node:network\ncidr:192.168.10.0/24";
+            style=filled;
+            color="black"
+            fillcolor="#F4AD46"
+            node1 [label="Node 1"];
+            node2 [label="Node 2"];
+        }
+
+    }
+
+    server -> sw1;
+    node1 -> sw2;
+    node2 -> sw2;
+    sw1 -> router
+    sw2 -> router
+    router -> internet;
+
+    internet [style=filled shape=doublecircle color=black fillcolor="#B64A17" height=1.5 label="Internet"];
+}
