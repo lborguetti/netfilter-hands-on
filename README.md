@@ -82,7 +82,7 @@ https://www.youtube.com/watch?v=HNQD0qJ0TC4
 ## Machine Names and IP Addresses (DNS)
 
  - [IANA - IP Addresses](https://www.iana.org/numbers) - responsible for global coordination of the Internet Protocol addressing systems, as well as the Autonomous System Numbers used for routing Internet traffic.
- - [IANA - Root Servers](https://www.iana.org/domains/root/servers) - responsible for global coordination of the Internet Protocol addressing systems, as well as the Autonomous System Numbers used for routing Internet traffic.
+ - [IANA - Root Servers](https://www.iana.org/domains/root/servers) - responsible for management of the DNS root zone. This role means assigning the operators of top-level domains, such as .uk and .com, and maintaining their technical and administrative details.
 
 ## Different Services: Email, Web, FTP, Name Serving
 
