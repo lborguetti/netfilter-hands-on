@@ -111,15 +111,13 @@ Check the status of VMs
 vagrant status
 ```
 
-This diagram bellow represent the network conection between this VMs
+The diagram bellow represent the network conection between this VMs
 
 
 ![Network Diagram](https://github.com/lborguetti/netfilter-hands-on/raw/master/docs/networking-diagram.dot.png)
 
 
 ## Network
-
-Network
 
 ### Connect to each VM and check the network and routing table settings and take notes.###
 
