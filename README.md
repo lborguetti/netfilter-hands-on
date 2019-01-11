@@ -287,9 +287,9 @@ Doubts?
 
 ### How Do I Packet Filter Under Linux?
 
-- [Netfilter](https://netfilter.org/) - netfilter is a set of hooks inside the Linux kernel that allows kernel modules to register callback functions with the network stack. A registered callback function is then called back for every packet that traverses the respective hook within the network stack.
+- [Netfilter](https://netfilter.org/) - is a set of hooks inside the Linux kernel that allows kernel modules to register callback functions with the network stack. A registered callback function is then called back for every packet that traverses the respective hook within the network stack.
 
-- [Iptables](https://netfilter.org/projects/iptables/index.html) - iptables is a generic table structure for the definition of rulesets. Each rule within an IP table consists of a number of classifiers (iptables matches) and one connected action (iptables target).
+- [Iptables](https://netfilter.org/projects/iptables/index.html) - is a generic table structure for the definition of rulesets. Each rule within an IP table consists of a number of classifiers (iptables matches) and one connected action (iptables target).
 
 ### How Packets Traverse The Filters
 
