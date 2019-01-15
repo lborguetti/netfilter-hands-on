@@ -125,7 +125,7 @@ The diagram bellow represent the network connection between this VMs
 
 ## Network
 
-### Connect to each VM and check the network and routing table settings and take notes.###
+### Connect to each VM and check the network and routing table settings and take notes.
 
 ```
 vagrant ssh VM-NAME
