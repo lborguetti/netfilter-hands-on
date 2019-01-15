@@ -24,7 +24,6 @@
     - [How Do I Packet Filter Under Linux?](#how-do-i-packet-filter-under-linux)
     - [How Packets Traverse The Filters](#how-packets-traverse-the-filters)
     - [Using iptables](#using-iptables)
-    - [Using iptables](#using-iptables-1)
         - [View current configuration](#view-current-configuration)
     - [Change the policy for a built-in chain INPUT. (-P).](#change-the-policy-for-a-builtin-chain-input-p)
         - [Create/Delete a new rule to a chain INPUT.](#createdelete-a-new-rule-to-a-chain-input)
