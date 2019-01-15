@@ -24,8 +24,9 @@
     - [How Do I Packet Filter Under Linux?](#how-do-i-packet-filter-under-linux)
     - [How Packets Traverse The Filters](#how-packets-traverse-the-filters)
     - [Using iptables](#using-iptables)
+    - [Hands-on](#handson)
         - [View current configuration](#view-current-configuration)
-    - [Change the policy for a built-in chain INPUT. (-P).](#change-the-policy-for-a-builtin-chain-input-p)
+        - [Change the policy for a built-in chain INPUT. (-P).](#change-the-policy-for-a-builtin-chain-input-p)
         - [Create/Delete a new rule to a chain INPUT.](#createdelete-a-new-rule-to-a-chain-input)
         - [Change the policy for a built-in chain FORWARD. (-P).](#change-the-policy-for-a-builtin-chain-forward-p)
         - [Create/Delete a new rule to a chain FORWARD.](#createdelete-a-new-rule-to-a-chain-forward)
@@ -325,7 +326,9 @@ iptables/ip6tables - administration tool for IPv4/IPv6 packet filtering and NAT
 - `raw` - PREROUTING, OUTPUT
 - `security` - INPUT, OUTPUT, FORWARD (SECMARK, CONNSECMARK)
 
-### Using iptables
+
+### Hands-on
+
 
 ```
 vagrant ssh node1
@@ -354,7 +357,7 @@ iptables -t filter -L -nv
 > Note: `--line-numbers`
 
 
-### Change the policy for a built-in chain INPUT. (-P).
+#### Change the policy for a built-in chain INPUT. (-P).
 
 `node1`
 
