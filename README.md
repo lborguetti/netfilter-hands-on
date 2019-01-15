@@ -2,28 +2,34 @@
 
 # Table of Contents
 
-    - [Requiriments](#requiriments)
-    - [Linux Networking Concepts](#linux-networking-concepts)
-    - [What is a `computer network`?](#what-is-a-computer-network)
-    - [What is the `Internet`?](#what-is-the-internet)
-    - [How Does The Internet Work?](#how-does-the-internet-work)
-    - [This IP Thing](#this-ip-thing)
-    - [Groups of IP Addresses: Network Masks](#groups-of-ip-addresses-network-masks)
-    - [Machine Names and IP Addresses (DNS)](#machine-names-and-ip-addresses-dns)
-    - [Different Services: Email, Web, FTP, Name Serving](#different-services-email-web-ftp-name-serving)
-    - [What Packets Look Like](#what-packets-look-like)
-    - [Environment Setup](#environment-setup)
-    - [Network](#network)
-        - [Connect to each VM and check the network and routing table settings and take notes.###](#connect-to-each-vm-and-check-the-network-and-routing-table-settings-and-take-notes)
-        - [Check the network connectivity and take notes.](#check-the-network-connectivity-and-take-notes)
-        - [Set the default route and take notes.](#set-the-default-route-and-take-notes)
-        - [Enable router ip_forward](#enable-router-ipforward)
-    - [Netfilter/Iptables](#netfilteriptables)
-        - [So What's A Packet Filter?](#so-whats-a-packet-filter)
-        - [Why Would I Want to Packet Filter?](#why-would-i-want-to-packet-filter)
-        - [How Do I Packet Filter Under Linux?](#how-do-i-packet-filter-under-linux)
-        - [How Packets Traverse The Filters](#how-packets-traverse-the-filters)
-        - [Using iptables](#using-iptables)
+- [Requiriments](#requiriments)
+- [Linux Networking Concepts](#linux-networking-concepts)
+- [What is a `computer network`?](#what-is-a-computer-network)
+- [What is the `Internet`?](#what-is-the-internet)
+- [How Does The Internet Work?](#how-does-the-internet-work)
+- [This IP Thing](#this-ip-thing)
+- [Groups of IP Addresses: Network Masks](#groups-of-ip-addresses-network-masks)
+- [Machine Names and IP Addresses (DNS)](#machine-names-and-ip-addresses-dns)
+- [Different Services: Email, Web, FTP, Name Serving](#different-services-email-web-ftp-name-serving)
+- [What Packets Look Like](#what-packets-look-like)
+- [Environment Setup](#environment-setup)
+- [Network](#network)
+    - [Connect to each VM and check the network and routing table settings and take notes.###](#connect-to-each-vm-and-check-the-network-and-routing-table-settings-and-take-notes)
+    - [Check the network connectivity and take notes.](#check-the-network-connectivity-and-take-notes)
+    - [Set the default route and take notes.](#set-the-default-route-and-take-notes)
+    - [Enable router ip_forward](#enable-router-ipforward)
+- [Netfilter/Iptables](#netfilteriptables)
+    - [So What's A Packet Filter?](#so-whats-a-packet-filter)
+    - [Why Would I Want to Packet Filter?](#why-would-i-want-to-packet-filter)
+    - [How Do I Packet Filter Under Linux?](#how-do-i-packet-filter-under-linux)
+    - [How Packets Traverse The Filters](#how-packets-traverse-the-filters)
+    - [Using iptables](#using-iptables)
+    - [Using iptables](#using-iptables-1)
+        - [View current configuration](#view-current-configuration)
+    - [Change the policy for a built-in chain INPUT. (-P).](#change-the-policy-for-a-builtin-chain-input-p)
+        - [Create/Delete a new rule to a chain INPUT.](#createdelete-a-new-rule-to-a-chain-input)
+        - [Change the policy for a built-in chain FORWARD. (-P).](#change-the-policy-for-a-builtin-chain-forward-p)
+        - [Create/Delete a new rule to a chain FORWARD.](#createdelete-a-new-rule-to-a-chain-forward)
 
 <!-- mdtocend -->
 
@@ -297,3 +303,145 @@ Doubts?
 
 
 ### Using iptables
+
+iptables/ip6tables - administration tool for IPv4/IPv6 packet filtering and NAT
+
+- Several different tables may be defined.
+- Each table contains a number of built-in chains and may also contain user-defined chains.
+- Each chain is a list of rules which can match a set of packets.
+- Each rule specifies what to do with a packet that matches (TARGET).
+
+**TARGETS**:
+
+- `DROP`
+- `ACCEPT`
+- `RETURN`
+- Or jump to a  user-defined chain in the same table.
+
+**TABLES**:
+
+- `filter` - INPUT, OUTPUT, FORWARD
+- `nat` - PREROUTING, INPUT, OUTPUT, POSTROUTING
+- `mangle` - PREROUTING, OUTPUT, INPUT, FORWARD, POSTROUTING
+- `raw` - PREROUTING, OUTPUT
+- `security` - INPUT, OUTPUT, FORWARD (SECMARK, CONNSECMARK)
+
+### Using iptables
+
+```
+vagrant ssh node1
+```
+
+Open a new shell
+
+```
+vagrant ssh router
+```
+
+```
+man iptables
+```
+
+#### View current configuration
+
+`router` and `node1`:
+
+```
+iptables -t mangle -L -nv
+iptables -t nat -L -nv
+iptables -t filter -L -nv
+```
+
+> Note: `--line-numbers`
+
+
+### Change the policy for a built-in chain INPUT. (-P).
+
+`node1`
+
+```
+ping -c 3 172.16.10.2
+```
+
+`router`
+
+```
+iptables -t filter -P INPUT DROP
+```
+
+`node1`
+
+```
+ping -c 3 172.16.10.2
+```
+
+#### Create/Delete a new rule to a chain INPUT.
+
+Append a new rule to a chain (-A).
+Insert a new rule at some position in a chain (-I).
+Replace a rule at some position in a chain (-R).
+Delete a rule at some position in a chain, or the first that matches (-D).
+
+`router`
+
+```
+iptables -t filter -A INPUT -p icmp -j ACCEPT
+```
+
+`node1`
+
+```
+ping -c 3 172.16.10.2
+```
+
+`router`
+
+```
+iptables -t filter -D INPUT -p icmp -j ACCEPT
+```
+
+#### Change the policy for a built-in chain FORWARD. (-P).
+
+`node1`
+
+```
+ping -c 3 192.168.20.10
+```
+
+`router`
+
+```
+iptables -t filter -P FORWARD DROP
+```
+
+`node1`
+
+```
+ping -c 3 172.16.10.2
+```
+
+`router`
+
+```
+iptables -t filter -P FORWARD ACCEPT
+```
+
+#### Create/Delete a new rule to a chain FORWARD.
+
+Append a new rule to a chain (-A).
+Insert a new rule at some position in a chain (-I).
+Replace a rule at some position in a chain (-R).
+Delete a rule at some position in a chain, or the first that matches (-D).
+
+`router`
+
+```
+iptables -t filter -P FORWARD DROP
+iptables -t filter -A FORWARD -p icmp -j ACCEPT
+```
+
+`node1`
+
+```
+ping -c 3 192.168.20.10
+```
