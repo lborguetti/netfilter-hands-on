@@ -2,28 +2,28 @@
 
 # Table of Contents
 
-- [Requiriments](#requiriments)
-- [Linux Networking Concepts](#linux-networking-concepts)
-- [What is a `computer network`?](#what-is-a-computer-network)
-- [What is the `Internet`?](#what-is-the-internet)
-- [How Does The Internet Work?](#how-does-the-internet-work)
-- [This IP Thing](#this-ip-thing)
-- [Groups of IP Addresses: Network Masks](#groups-of-ip-addresses-network-masks)
-- [Machine Names and IP Addresses (DNS)](#machine-names-and-ip-addresses-dns)
-- [Different Services: Email, Web, FTP, Name Serving](#different-services-email-web-ftp-name-serving)
-- [What Packets Look Like](#what-packets-look-like)
-- [Environment Setup](#environment-setup)
-- [Network](#network)
-    - [Connect to each VM and check the network and routing table settings and take notes.###](#connect-to-each-vm-and-check-the-network-and-routing-table-settings-and-take-notes)
-    - [Check the network connectivity and take notes.](#check-the-network-connectivity-and-take-notes)
-    - [Set the default route and take notes.](#set-the-default-route-and-take-notes)
-    - [Enable router ip_forward](#enable-router-ipforward)
-- [Netfilter/Iptables](#netfilteriptables)
-    - [So What's A Packet Filter?](#so-whats-a-packet-filter)
-    - [Why Would I Want to Packet Filter?](#why-would-i-want-to-packet-filter)
-    - [How Do I Packet Filter Under Linux?](#how-do-i-packet-filter-under-linux)
-    - [How Packets Traverse The Filters](#how-packets-traverse-the-filters)
-    - [Using iptables](#using-iptables)
+    - [Requiriments](#requiriments)
+    - [Linux Networking Concepts](#linux-networking-concepts)
+    - [What is a `computer network`?](#what-is-a-computer-network)
+    - [What is the `Internet`?](#what-is-the-internet)
+    - [How Does The Internet Work?](#how-does-the-internet-work)
+    - [This IP Thing](#this-ip-thing)
+    - [Groups of IP Addresses: Network Masks](#groups-of-ip-addresses-network-masks)
+    - [Machine Names and IP Addresses (DNS)](#machine-names-and-ip-addresses-dns)
+    - [Different Services: Email, Web, FTP, Name Serving](#different-services-email-web-ftp-name-serving)
+    - [What Packets Look Like](#what-packets-look-like)
+    - [Environment Setup](#environment-setup)
+    - [Network](#network)
+        - [Connect to each VM and check the network and routing table settings and take notes.###](#connect-to-each-vm-and-check-the-network-and-routing-table-settings-and-take-notes)
+        - [Check the network connectivity and take notes.](#check-the-network-connectivity-and-take-notes)
+        - [Set the default route and take notes.](#set-the-default-route-and-take-notes)
+        - [Enable router ip_forward](#enable-router-ipforward)
+    - [Netfilter/Iptables](#netfilteriptables)
+        - [So What's A Packet Filter?](#so-whats-a-packet-filter)
+        - [Why Would I Want to Packet Filter?](#why-would-i-want-to-packet-filter)
+        - [How Do I Packet Filter Under Linux?](#how-do-i-packet-filter-under-linux)
+        - [How Packets Traverse The Filters](#how-packets-traverse-the-filters)
+        - [Using iptables](#using-iptables)
 
 <!-- mdtocend -->
 
@@ -147,8 +147,8 @@ cat /proc/sys/net/ipv4/ip_forward
 
 ```
 ping 192.168.20.10 # server vm
-ping 192.168.10.10 # node1 vm
-ping 192.168.10.11 # node2 vm
+ping 172.16.10.10 # node1 vm
+ping 172.16.10.11 # node2 vm
 ping 8.8.8.8
 dig @8.8.8.8 www.google.com
 curl -v https://www.google.com
@@ -158,8 +158,8 @@ curl -v https://www.google.com
 
 ```
 ping 192.168.20.2 # router vm
-ping 192.168.10.10 # node1 vm
-ping 192.168.10.11 # node2 vm
+ping 172.16.10.10 # node1 vm
+ping 172.16.10.11 # node2 vm
 ping 8.8.8.8
 dig @8.8.8.8 www.google.com
 curl -v https://www.google.com
@@ -168,8 +168,8 @@ curl -v https://www.google.com
 **node1 VM**
 
 ```
-ping 192.168.10.2 # router vm
-ping 192.168.10.11 # node2 vm
+ping 172.16.10.2 # router vm
+ping 172.16.10.11 # node2 vm
 ping 192.168.20.10 # server vm
 ping 8.8.8.8
 dig @8.8.8.8 www.google.com
@@ -179,8 +179,8 @@ curl -v https://www.google.com
 **node2 VM**
 
 ```
-ping 192.168.10.2 # router vm
-ping 192.168.10.10 # node1 vm
+ping 172.16.10.2 # router vm
+ping 172.16.10.10 # node1 vm
 ping 192.168.20.10 # server vm
 ping 8.8.8.8
 dig @8.8.8.8 www.google.com
@@ -212,7 +212,7 @@ vagrant ssh node1
 ```
 
 ```
-ip route add default via 192.168.10.2
+ip route add default via 172.16.10.2
 ```
 
 or
@@ -228,7 +228,7 @@ vagrant ssh node2
 ```
 
 ```
-ip route add default via 192.168.10.2
+ip route add default via 172.16.10.2
 ```
 
 or

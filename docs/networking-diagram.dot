@@ -19,7 +19,7 @@ digraph G {
 
         subgraph cluster2 {
             node [style=filled shape=Mdiamond color=black fillcolor="gray" height=1.2];
-            label = "router:network\ncidr:192.168.10.0/24\ncidr:192.168.20.0/24\ncidr:10.0.2.0/24";
+            label = "router:network\ncidr:172.16.10.0/24\ncidr:192.168.20.0/24\ncidr:10.0.2.0/24";
             style=filled;
             color="black";
             fillcolor="#9E8582"
@@ -36,7 +36,7 @@ digraph G {
         }
         subgraph cluster4 {
             node [style=filled shape=box3d color=black fillcolor="gray" height=1.5];
-            label = "node:network\ncidr:192.168.10.0/24";
+            label = "node:network\ncidr:172.16.10.0/24";
             style=filled;
             color="black"
             fillcolor="#F4AD46"
