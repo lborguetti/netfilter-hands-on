@@ -379,10 +379,10 @@ ping -c 3 172.16.10.2
 
 #### Create/Delete a new rule to a chain INPUT.
 
-Append a new rule to a chain (-A).
-Insert a new rule at some position in a chain (-I).
-Replace a rule at some position in a chain (-R).
-Delete a rule at some position in a chain, or the first that matches (-D).
+- Append a new rule to a chain (-A).
+- Insert a new rule at some position in a chain (-I).
+- Replace a rule at some position in a chain (-R).
+- Delete a rule at some position in a chain, or the first that matches (-D).
 
 `router`
 
@@ -430,10 +430,10 @@ iptables -t filter -P FORWARD ACCEPT
 
 #### Create/Delete a new rule to a chain FORWARD.
 
-Append a new rule to a chain (-A).
-Insert a new rule at some position in a chain (-I).
-Replace a rule at some position in a chain (-R).
-Delete a rule at some position in a chain, or the first that matches (-D).
+- Append a new rule to a chain (-A).
+- Insert a new rule at some position in a chain (-I).
+- Replace a rule at some position in a chain (-R).
+- Delete a rule at some position in a chain, or the first that matches (-D).
 
 `router`
 
