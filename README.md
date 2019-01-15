@@ -2,7 +2,7 @@
 
 # Table of Contents
 
-- [Requiriments](#requiriments)
+- [Requirements](#requirements)
 - [Linux Networking Concepts](#linux-networking-concepts)
 - [What is a `computer network`?](#what-is-a-computer-network)
 - [What is the `Internet`?](#what-is-the-internet)
@@ -35,9 +35,9 @@
 Course Netfilter/Iptables Hands-On
 ===
 
-## Requiriments
+## Requirements
 
-  - [Vagrant](https://www.vagrantup.com/) is a command line utility for managing the lifecycle of virtual machines.
+  - [Vagrant](https://www.vagrantup.com/) is a command line utility for managing the life cycle of virtual machines.
   - [Virtualbox](https://www.virtualbox.org/)  is a general-purpose full virtualizer for x86 hardware, targeted at server, desktop and embedded use.
 
 ## Linux Networking Concepts
@@ -54,7 +54,7 @@ https://www.youtube.com/watch?v=HNQD0qJ0TC4
 
 ## This IP Thing
 
-- The role of the IP layer is to figure out how to `route' packets to their final destination
+- The role of the IP layer is to figure out how to `route` packets to their final destination
 
 - Router is a node with interfaces on more than one network
 
@@ -116,7 +116,7 @@ Check the status of VMs
 vagrant status
 ```
 
-The diagram bellow represent the network conection between this VMs
+The diagram bellow represent the network connection between this VMs
 
 
 ![Network Diagram](https://github.com/lborguetti/netfilter-hands-on/raw/master/docs/networking-diagram.dot.png)
@@ -244,7 +244,7 @@ route add default gw 192.168.20.2
 
 **Check the network connectivity again.**
 
-Doubts?
+Questions?
 
 ### Enable router ip_forward
 
@@ -271,11 +271,11 @@ vagrant ssh router
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
 
-Enable ip_forward permanentely. Edit */etc/sysctl.conf* and add: `net.ipv4.ip_forward=1`
+Enable ip_forward permanently. Edit */etc/sysctl.conf* and add: `net.ipv4.ip_forward=1`
 
 **Check the network connectivity again.**
 
-Doubts?
+Questions?
 
 
 ## Netfilter/Iptables
