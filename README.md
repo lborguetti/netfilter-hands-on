@@ -132,6 +132,7 @@ vagrant ssh VM-NAME
 ```
 
 ```
+sudo su -
 ip address show
 ip route show
 cat /etc/resolv.conf
@@ -141,6 +142,7 @@ cat /proc/sys/net/ipv4/ip_forward
 or
 
 ```
+sudo su -
 ifconfig -a
 route -n
 cat /etc/resolv.conf
@@ -149,20 +151,35 @@ cat /proc/sys/net/ipv4/ip_forward
 
 ### Check the network connectivity and take notes.
 
+
 **router VM**
 
 ```
-ping 192.168.20.10 # server vm
+vagrant ssh router
+```
+
+```
+sudo su -
+ping 192.168.20.20 # server vm
 ping 172.16.10.10 # node1 vm
 ping 172.16.10.11 # node2 vm
 ping 8.8.8.8
 dig @8.8.8.8 www.google.com
 curl -v https://www.google.com
+tcpdump -i any -NNnl icmp
 ```
 
 **server VM**
 
+Open a new shell
+
+
 ```
+vagrant ssh server
+```
+
+```
+sudo su -
 ping 192.168.20.2 # router vm
 ping 172.16.10.10 # node1 vm
 ping 172.16.10.11 # node2 vm
@@ -173,10 +190,18 @@ curl -v https://www.google.com
 
 **node1 VM**
 
+Open a new shell
+
+
 ```
+vagrant ssh node1
+```
+
+```
+sudo su -
 ping 172.16.10.2 # router vm
 ping 172.16.10.11 # node2 vm
-ping 192.168.20.10 # server vm
+ping 192.168.20.20 # server vm
 ping 8.8.8.8
 dig @8.8.8.8 www.google.com
 curl -v https://www.google.com
@@ -184,10 +209,18 @@ curl -v https://www.google.com
 
 **node2 VM**
 
+Open a new shell
+
+
 ```
+vagrant ssh node2
+```
+
+```
+sudo su -
 ping 172.16.10.2 # router vm
 ping 172.16.10.10 # node1 vm
-ping 192.168.20.10 # server vm
+ping 192.168.20.20 # server vm
 ping 8.8.8.8
 dig @8.8.8.8 www.google.com
 curl -v https://www.google.com
@@ -202,12 +235,14 @@ vagrant ssh server
 ```
 
 ```
+sudo su -
 ip route add default via 192.168.20.2
 ```
 
 or
 
 ```
+sudo su -
 route add default gw 192.168.20.2
 ```
 
@@ -218,12 +253,14 @@ vagrant ssh node1
 ```
 
 ```
+sudo su -
 ip route add default via 172.16.10.2
 ```
 
 or
 
 ```
+sudo su -
 route add default gw 192.168.20.2
 ```
 
@@ -234,12 +271,14 @@ vagrant ssh node2
 ```
 
 ```
+sudo su -
 ip route add default via 172.16.10.2
 ```
 
 or
 
 ```
+sudo su -
 route add default gw 192.168.20.2
 ```
 
@@ -269,6 +308,7 @@ vagrant ssh router
 ```
 
 ```
+sudo su -
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
 
@@ -329,12 +369,19 @@ iptables/ip6tables - administration tool for IPv4/IPv6 packet filtering and NAT
 
 ### Hands-on
 
-
 ```
 vagrant ssh node1
 ```
 
 Open a new shell
+
+
+```
+vagrant ssh server
+```
+
+Open a new shell
+
 
 ```
 vagrant ssh router
@@ -346,7 +393,7 @@ man iptables
 
 #### View current configuration
 
-`router` and `node1`:
+`router`, `server` and `node1`:
 
 ```
 iptables -t mangle -L -nv
@@ -362,7 +409,7 @@ iptables -t filter -L -nv
 `node1`
 
 ```
-ping -c 3 172.16.10.2
+ping -c 3 172.16.10.2 # router
 ```
 
 `router`
@@ -374,7 +421,7 @@ iptables -t filter -P INPUT DROP
 `node1`
 
 ```
-ping -c 3 172.16.10.2
+ping -c 3 172.16.10.2 # router
 ```
 
 #### Create/Delete a new rule to a chain INPUT.
@@ -393,7 +440,7 @@ iptables -t filter -A INPUT -p icmp -j ACCEPT
 `node1`
 
 ```
-ping -c 3 172.16.10.2
+ping -c 3 172.16.10.2 # router
 ```
 
 `router`
@@ -407,7 +454,7 @@ iptables -t filter -D INPUT -p icmp -j ACCEPT
 `node1`
 
 ```
-ping -c 3 192.168.20.10
+ping -c 3 192.168.20.20 # server
 ```
 
 `router`
@@ -445,5 +492,56 @@ iptables -t filter -A FORWARD -p icmp -j ACCEPT
 `node1`
 
 ```
-ping -c 3 192.168.20.10
+ping -c 3 192.168.20.20
 ```
+
+#### Create a new rule to enable NAT to node1 and node2 (172.16.10.0/24)
+
+`node1`
+
+```
+ping -c 3 8.8.8.8
+```
+
+`router`
+
+```
+iptables -t nat -A POSTROUTING -s 172.16.10.0/24 -j MASQUERADE
+```
+
+`node1`
+
+```
+ping -c 3 8.8.8.8
+```
+
+#### Create a new rule to enable NAT to server (192.168.20.0/24)
+
+`server`
+
+```
+ping -c 3 8.8.8.8
+```
+
+`router`
+
+```
+iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -j MASQUERADE
+```
+
+`server`
+
+```
+ping -c 3 8.8.8.8
+apt-get update
+apt-get install nginx
+```
+
+#### Build the simple firewall script
+
+- Deny all traffic by default
+- Allow ICMP traffic
+- Allow lo traffic
+- Allow http traffic: node -> server
+- Allow http redirect: router -> server
+- Allow Internet Access
