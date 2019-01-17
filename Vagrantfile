@@ -15,11 +15,14 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "router" do |router|
+    router.vm.hostname = "router"
     router.vm.network "private_network", ip: "172.16.10.2"
     router.vm.network "private_network", ip: "192.168.20.2"
+    router.vm.network "forwarded_port", guest: 80, host: 8080
   end
 
   config.vm.define "node1" do |node1|
+    node1.vm.hostname = "nodeone"
     node1.vm.network "private_network", ip: "172.16.10.10"
     # delete default gw
     node1.vm.provision "shell",
@@ -28,6 +31,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "node2" do |node2|
+    node2.vm.hostname = "nodetwo"
     node2.vm.network "private_network", ip: "172.16.10.11"
     # delete default gw
     node2.vm.provision "shell",
@@ -36,6 +40,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "server" do |server|
+    server.vm.hostname = "server"
     server.vm.network "private_network", ip: "192.168.20.20"
     # delete default gw
     server.vm.provision "shell",
