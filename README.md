@@ -14,7 +14,7 @@
 - [What Packets Look Like](#what-packets-look-like)
 - [Environment Setup](#environment-setup)
 - [Network](#network)
-    - [Connect to each VM and check the network and routing table settings and take notes.###](#connect-to-each-vm-and-check-the-network-and-routing-table-settings-and-take-notes)
+    - [Connect to each VM and check the network and routing table settings and take notes.](#connect-to-each-vm-and-check-the-network-and-routing-table-settings-and-take-notes)
     - [Check the network connectivity and take notes.](#check-the-network-connectivity-and-take-notes)
     - [Set the default route and take notes.](#set-the-default-route-and-take-notes)
     - [Enable router ip_forward](#enable-router-ipforward)
@@ -30,6 +30,9 @@
         - [Create/Delete a new rule to a chain INPUT.](#createdelete-a-new-rule-to-a-chain-input)
         - [Change the policy for a built-in chain FORWARD. (-P).](#change-the-policy-for-a-builtin-chain-forward-p)
         - [Create/Delete a new rule to a chain FORWARD.](#createdelete-a-new-rule-to-a-chain-forward)
+        - [Create a new rule to enable NAT to node1 and node2 (172.16.10.0/24)](#create-a-new-rule-to-enable-nat-to-node1-and-node2-1721610024)
+        - [Create a new rule to enable NAT to server (192.168.20.0/24)](#create-a-new-rule-to-enable-nat-to-server-19216820024)
+        - [Build the simple firewall script](#build-the-simple-firewall-script)
 
 <!-- mdtocend -->
 
