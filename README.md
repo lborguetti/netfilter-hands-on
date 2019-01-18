@@ -399,6 +399,14 @@ man iptables
 `router`, `server` and `node1`:
 
 ```
+iptables --table mangle --list --numeric --verbose
+iptables --table nat --list --numeric --verbose
+iptables --table filter --list --numeric --verbose
+```
+
+or
+
+```
 iptables -t mangle -L -nv
 iptables -t nat -L -nv
 iptables -t filter -L -nv
@@ -418,6 +426,12 @@ ping -c 3 172.16.10.2 # router
 `router`
 
 ```
+iptables --table filter --policy INPUT DROP
+```
+
+or
+
+```
 iptables -t filter -P INPUT DROP
 ```
 
@@ -429,15 +443,30 @@ ping -c 3 172.16.10.2 # router
 
 #### Create/Delete a new rule to a chain INPUT.
 
-- Append a new rule to a chain (-A).
-- Insert a new rule at some position in a chain (-I).
-- Replace a rule at some position in a chain (-R).
-- Delete a rule at some position in a chain, or the first that matches (-D).
+> Note: Allow vagrant ssh traffic before change INPUT policy ;]
+
+- Append a new rule to a chain (-A|--append).
+- Insert a new rule at some position in a chain (-I|--insert).
+- Replace a rule at some position in a chain (-R|--replace).
+- Delete a rule at some position in a chain, or the first that matches (-D|--delete).
 
 `router`
 
 ```
+iptables --table filter --append INPUT --in-interface enp0s3 -j ACCEPT
+iptables --table filter --append INPUT --out-interface enp0s3 -j ACCEPT
+iptables --table filter --append INPUT --protocol icmp -j ACCEPT
+iptables --table filter --policy INPUT DROP
+
+```
+
+or
+
+```
+iptables -t filter -A INPUT -i enp0s3 -j ACCEPT
+iptables -t filter -A INPUT -o enp0s3 -j ACCEPT
 iptables -t filter -A INPUT -p icmp -j ACCEPT
+iptables -t filter -P INPUT DROP
 ```
 
 `node1`
@@ -449,6 +478,19 @@ ping -c 3 172.16.10.2 # router
 `router`
 
 ```
+iptables --table filter --policy INPUT ACCEPT
+iptables --table filter --delete INPUT --in-interface enp0s3 -j ACCEPT
+iptables --table filter --delete INPUT --out-interface enp0s3 -j ACCEPT
+iptables --table filter --delete INPUT --protocol icmp -j ACCEPT
+```
+
+or
+
+
+```
+iptables -t filter -P INPUT ACCEPT
+iptables -t filter -D INPUT -i enp0s3 -j ACCEPT
+iptables -t filter -D INPUT -o enp0s3 -j ACCEPT
 iptables -t filter -D INPUT -p icmp -j ACCEPT
 ```
 
@@ -463,6 +505,13 @@ ping -c 3 192.168.20.20 # server
 `router`
 
 ```
+iptables --table filter --policy FORWARD DROP
+```
+
+or
+
+
+```
 iptables -t filter -P FORWARD DROP
 ```
 
@@ -473,6 +522,13 @@ ping -c 3 172.16.10.2
 ```
 
 `router`
+
+```
+iptables --table filter --policy FORWARD ACCEPT
+```
+
+or
+
 
 ```
 iptables -t filter -P FORWARD ACCEPT
@@ -488,8 +544,13 @@ iptables -t filter -P FORWARD ACCEPT
 `router`
 
 ```
-iptables -t filter -P FORWARD DROP
+iptables --table filter --append FORWARD --protocol icmp -j ACCEPT
+iptables --table filter --policy FORWARD DROP
+```
+
+```
 iptables -t filter -A FORWARD -p icmp -j ACCEPT
+iptables -t filter -P FORWARD DROP
 ```
 
 `node1`
@@ -507,6 +568,12 @@ ping -c 3 8.8.8.8
 ```
 
 `router`
+
+```
+iptables --table nat --append POSTROUTING --source 172.16.10.0/24 -j MASQUERADE
+```
+
+or
 
 ```
 iptables -t nat -A POSTROUTING -s 172.16.10.0/24 -j MASQUERADE
@@ -527,6 +594,12 @@ ping -c 3 8.8.8.8
 ```
 
 `router`
+
+```
+iptables --table nat --append POSTROUTING --source 192.168.20.0/24 -j MASQUERADE
+```
+
+or
 
 ```
 iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -j MASQUERADE
