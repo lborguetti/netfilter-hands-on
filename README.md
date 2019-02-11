@@ -264,7 +264,7 @@ or
 
 ```
 sudo su -
-route add default gw 192.168.20.2
+route add default gw 172.16.10.2
 ```
 
 **node2 VMs**
@@ -282,7 +282,7 @@ or
 
 ```
 sudo su -
-route add default gw 192.168.20.2
+route add default gw 172.16.10.2
 ```
 
 **Check the network connectivity again.**
@@ -454,7 +454,6 @@ ping -c 3 172.16.10.2 # router
 
 ```
 iptables --table filter --append INPUT --in-interface enp0s3 -j ACCEPT
-iptables --table filter --append INPUT --out-interface enp0s3 -j ACCEPT
 iptables --table filter --append INPUT --protocol icmp -j ACCEPT
 iptables --table filter --policy INPUT DROP
 
@@ -464,7 +463,6 @@ or
 
 ```
 iptables -t filter -A INPUT -i enp0s3 -j ACCEPT
-iptables -t filter -A INPUT -o enp0s3 -j ACCEPT
 iptables -t filter -A INPUT -p icmp -j ACCEPT
 iptables -t filter -P INPUT DROP
 ```
@@ -480,7 +478,6 @@ ping -c 3 172.16.10.2 # router
 ```
 iptables --table filter --policy INPUT ACCEPT
 iptables --table filter --delete INPUT --in-interface enp0s3 -j ACCEPT
-iptables --table filter --delete INPUT --out-interface enp0s3 -j ACCEPT
 iptables --table filter --delete INPUT --protocol icmp -j ACCEPT
 ```
 
@@ -490,7 +487,6 @@ or
 ```
 iptables -t filter -P INPUT ACCEPT
 iptables -t filter -D INPUT -i enp0s3 -j ACCEPT
-iptables -t filter -D INPUT -o enp0s3 -j ACCEPT
 iptables -t filter -D INPUT -p icmp -j ACCEPT
 ```
 
