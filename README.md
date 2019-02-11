@@ -514,7 +514,7 @@ iptables -t filter -P FORWARD DROP
 `node1`
 
 ```
-ping -c 3 172.16.10.2
+ping -c 3 192.168.20.20 # server
 ```
 
 `router`
